@@ -1,6 +1,8 @@
-<div
-  (mousedown)="setStatus($event, 1)"
-  (window:mouseup)="setStatus($event, 0)"
-  class="wrapper"
-  #ghostEl
-></div>
+<div class="outer">
+  <div
+    (click)="onClick()"
+    (panup)="onPanUp($event)"
+    class="wrapper"
+    #ghostEl
+  ></div>
+</div>

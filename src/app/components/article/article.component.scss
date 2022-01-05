@@ -1,8 +1,11 @@
-.wrapper {
-  position: absolute;
-  width: 100vw;
-  height: 200px;
-  background-color: black;
-  left: 0;
-  bottom: 0;
+.outer {
+  overflow: hidden;
+  .wrapper {
+    position: absolute;
+    width: 100vw;
+    height: 200px;
+    background-color: black;
+    left: 0;
+    bottom: 0;
+  }
 }

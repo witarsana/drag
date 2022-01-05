@@ -2,17 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  HostListener,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-
-const enum Status {
-  OFF = 0,
-  RESIZE = 1,
-  MOVE = 2,
-}
 
 @Component({
   selector: 'app-article',
@@ -22,8 +14,8 @@ const enum Status {
 export class ArticleComponent implements OnInit, AfterViewInit {
   constructor() {}
 
-  status: Status = Status.OFF;
   initHeight = 200;
+  height = 200;
 
   @ViewChild('ghostEl') ghostEl: ElementRef<any>;
 
@@ -33,22 +25,24 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     this.ghostEl.nativeElement.style.height = `${this.initHeight}px`;
   }
 
-  setStatus(event: MouseEvent, status: number) {
-    if (this.status === Status.OFF) {
-      this.status = status;
-    } else {
-      this.status = Status.OFF;
+  onPanUp(event: any) {
+    const newHeight = this.height + (event.deltaY * -1 - this.height);
+    this.height = newHeight;
+    this.ghostEl.nativeElement.style.height = `${this.height}px`;
+  }
+
+  onClick() {
+    if (this.height !== this.initHeight) {
+      this.ghostEl.nativeElement.style.height = `${this.initHeight}px`;
     }
   }
 
-  @HostListener('window:mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    if (this.status === Status.RESIZE) {
-      const newHeight =
-        this.initHeight + (event.screenY * -1 - this.initHeight);
-      this.ghostEl.nativeElement.style.height = `${newHeight}px`;
-    }
-  }
+  // onPanDown(event: any) {
+  //   const newHeight = this.height - event.deltaY;
+  //   this.height = newHeight;
+  //   console.log(this.height);
+  //   this.ghostEl.nativeElement.style.height = `${this.height}px`;
+  // }
 
   ngOnDestroy(): void {}
 }
