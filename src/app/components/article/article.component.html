@@ -1,0 +1,6 @@
+<div
+  (mousedown)="setStatus($event, 1)"
+  (window:mouseup)="setStatus($event, 0)"
+  class="wrapper"
+  #ghostEl
+></div>

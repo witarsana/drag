@@ -1,0 +1,17 @@
+<!-- <div *ngFor="let card of articleCards">
+  <p>
+    <a routerLink="/{{ card.slug }}">{{ card.title }}</a>
+  </p>
+</div> -->
+
+<div class="example-boundary">
+  <div
+    (cdkDragMoved)="cdkDragEnded($event)"
+    class="example-box"
+    cdkDragBoundary=".example-boundary"
+    cdkDrag
+    #ghostEl
+  >
+    I can only be dragged within the dotted container
+  </div>
+</div>
