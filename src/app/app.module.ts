@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, HammerModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  HammerModule,
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +15,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { InteractoModule } from 'interacto-angular';
+export class MyHammerConfig extends HammerGestureConfig {
+  override = <any>{
+    // override hammerjs default configuration
+    pan: { threshold: 5 },
+    swipe: {
+      velocity: 0.4,
+      threshold: 5,
+      direction: 31, // /!\ ugly hack to allow swipe in all direction
+    },
+  };
+}
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, ArticleComponent],
@@ -22,7 +37,12 @@ import { InteractoModule } from 'interacto-angular';
     DragDropModule,
     HammerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
